@@ -5,9 +5,11 @@
     </nav>
     <main>
       <NuxtPage />
+    <div class="background" />
     </main>
   </div>
 </template>
+
 
 <script setup>
 import NavBar from '~/components/NavBar.vue'
@@ -24,28 +26,24 @@ import NavBar from '~/components/NavBar.vue'
 
 /* Contenu principal */
 main {
-  margin-top: 50px; /* Laisse de la place pour la navigation */
+  margin-top: 70px; /* Laisse de la place pour la navigation */
   flex-grow: 1; /* Prend tout l'espace restant */
   padding: 20px;
   overflow-y: auto; /* Permet de scroller si le contenu dépasse */
   height: 100%; /* Assure une pleine hauteur */
   z-index: 1;
 }
-
-/* Couche de bruit */
-.noise-layer {
-  background-image: 
-    linear-gradient(#faf2e0, #faf2e0), /* Couleur de teinte */
-    url("/images/bkg.png"); 
+.background {
   position: fixed;
-  top: 0;
   left: 0;
-  width: 100vw;
-  height: 100vh;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  background-position: center center;
   background-size: cover;
-  background-position: bottom;
-  z-index: 0; /* Sous tous les éléments visibles */
-  pointer-events: none;
-  background-blend-mode: multiply;
+  background-attachment: fixed;
+  background-image: url('https://cdn.sanity.io/images/w6f4ec13/production/ada85cf666b6d2979ac09bf40d766ca94c0757e3-4032x3024.jpg');
+  background-repeat:no-repeat;
+  z-index: -1;
 }
 </style>

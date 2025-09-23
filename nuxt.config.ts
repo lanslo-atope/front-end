@@ -10,10 +10,14 @@ export default defineNuxtConfig({
         { name: 'description', content: 'Description de mon site' },
       ],
       link: [
-        { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Fira+Sans+Extra+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Pirata+One&display=swap" rel="stylesheet' }
+        { rel: 'stylesheet', href:"https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap" }
       ]
+    }
+  },
+  runtimeConfig: {
+    public: {
+      sanityProjectId: process.env.NUXT_PUBLIC_SANITY_PROJECT_ID,
+      sanityDataset: process.env.NUXT_PUBLIC_SANITY_DATASET,
     }
   }
 })
-
-
