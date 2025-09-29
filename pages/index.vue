@@ -2,7 +2,7 @@
     <div class="a-propos">
     <figure class="polaroid">
       <img src="https://cdn.sanity.io/images/w6f4ec13/production/7c54b1bf9c7db834fd7ce03c16144b1906731297-4032x3024.jpg?w=250" alt="album cover" />
-      <figcaption class="caption">The Shimmering Bird</figcaption>
+      <figcaption class="caption">serie A-75 exp</figcaption>
     </figure>
     <p>
       Ici, les albums ne sont pas vraiment chroniqués.<br>Ils sont vécus, hantés, parfois rejoués en boucle jusqu’à ce qu’un sens émerge — ou disparaisse.<br>
