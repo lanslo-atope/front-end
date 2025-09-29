@@ -17,7 +17,7 @@ export default defineNuxtConfig({
     public: {
       sanityProjectId: process.env.NUXT_PUBLIC_SANITY_PROJECT_ID,
       sanityDataset: process.env.NUXT_PUBLIC_SANITY_DATASET,
-      sanityApiVersion: process.env.NUXT_PUBLIC_SANITY_API_VERSION || '2025-01-01'
+      sanityApiVersion: process.env.NUXT_PUBLIC_SANITY_API_VERSION || '2025-08-01'
     }
   }
 })
