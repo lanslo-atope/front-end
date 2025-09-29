@@ -1,4 +1,3 @@
-// https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   compatibilityDate: '2024-11-01',
   devtools: { enabled: false },
@@ -18,6 +17,7 @@ export default defineNuxtConfig({
     public: {
       sanityProjectId: process.env.NUXT_PUBLIC_SANITY_PROJECT_ID,
       sanityDataset: process.env.NUXT_PUBLIC_SANITY_DATASET,
+      sanityApiVersion: process.env.NUXT_PUBLIC_SANITY_API_VERSION || '2025-01-01'
     }
   }
 })

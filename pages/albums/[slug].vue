@@ -21,9 +21,9 @@
           <h2 class="album-artist-title" v-if="album.stitle">{{ album.stitle }}</h2>
           <h2 class="album-label-title" v-if="album.labelAndRelease">
             <svg class="label-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-  <path d="M3 12V4a1 1 0 0 1 1-1h8l9 9-9 9-9-9z"/>
-  <circle cx="7.5" cy="7.5" r="1.5" fill="white"/>
-</svg>
+              <path d="M3 12V4a1 1 0 0 1 1-1h8l9 9-9 9-9-9z"/>
+              <circle cx="7.5" cy="7.5" r="1.5" fill="white"/>
+            </svg>
             <p>{{ album.labelAndRelease.label+" — "+formatLabelDate(album.labelAndRelease.releaseYear) }}</p>
           </h2>
         </div>
@@ -42,13 +42,12 @@
             <span class="album-date">{{ formatAuthorDate(album.date) }}</span>
           </div>
         </div>
-        
       </div>
     </div>
   </div>
 
   <div v-else>
-    <p>x</p>
+    <p>Chargement...</p>
   </div>
 </template>
 
@@ -57,27 +56,30 @@ import { useSanity } from '~/composables/useSanity'
 import { useRoute } from 'vue-router'
 import { PortableText } from '@portabletext/vue'
 
+// route dynamique : /albums/[slug]
 const route = useRoute()
 const client = useSanity()
 
-const query = `
-  *[_type == "article" && slug.current == $slug][0]{
-    _id,
-    title,
-    stitle,
-    date,
-    labelAndRelease,
-    author->{
-      name,
-      "avatar": avatar.asset->url
-    },
-    "image": image.asset->url,
-    content,
-    category
-  }
-`
-
-const album = await client.fetch(query, { slug: route.params.slug })
+// fetch côté serveur ET client (SSR-friendly)
+const { data: album } = await useAsyncData(`album-${route.params.slug}`, () =>
+  client.fetch(
+    `*[_type == "article" && slug.current == $slug][0]{
+      _id,
+      title,
+      stitle,
+      date,
+      labelAndRelease,
+      author->{
+        name,
+        "avatar": avatar.asset->url
+      },
+      "image": image.asset->url,
+      content,
+      category
+    }`,
+    { slug: route.params.slug }
+  )
+)
 
 function formatAuthorDate(dateString) {
   const date = new Date(dateString)
@@ -87,6 +89,7 @@ function formatAuthorDate(dateString) {
     year: 'numeric',
   }).format(date)
 }
+
 function formatLabelDate(dateString) {
   const date = new Date(dateString)
   return new Intl.DateTimeFormat('fr-FR', {
@@ -184,13 +187,13 @@ function formatLabelDate(dateString) {
 .album-content {
   font-size: 0.9rem;
   color: #333;
+  line-height: 1.3;
 }
 
 .album-content > :first-child::first-letter {
   float: left;
   font-size: 3.5rem;
   font-family: "DM Serif Text", serif;
-  line-height: 0.8;
   padding-right: 8px;
   padding-top: 6px;
   font-weight: 100;

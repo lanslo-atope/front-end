@@ -2,7 +2,7 @@
     <div class="a-propos">
     <figure class="polaroid">
       <img src="https://cdn.sanity.io/images/w6f4ec13/production/7c54b1bf9c7db834fd7ce03c16144b1906731297-4032x3024.jpg?w=250" alt="album cover" />
-      <figcaption class="caption">Album A</figcaption>
+      <figcaption class="caption">The Shimmering Bird</figcaption>
     </figure>
     <p>
       Ici, les albums ne sont pas vraiment chroniqués.<br>Ils sont vécus, hantés, parfois rejoués en boucle jusqu’à ce qu’un sens émerge — ou disparaisse.<br>
@@ -23,9 +23,9 @@ Et si tu regardes, tu entendras</p>
     margin: 0 auto;
     padding: 60px 20px;
     line-height: 1.6;
-    font-family: "Fira Sans Serif", serif;
+    font-family: "Fira Sans", serif;
     font-size: 1rem;
-    color: #111;
+    color: #333;
     position: relative;
     font-style: italic;
 }

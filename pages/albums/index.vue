@@ -1,6 +1,9 @@
 <template>
   <div class="articles-grid">
-    <NuxtLink 
+    <p v-if="pending">Chargement...</p>
+    <p v-else-if="error">Erreur : {{ error.message }}</p>
+    <NuxtLink
+      v-else
       v-for="article in filteredArticles"
       :key="article._id"
       :to="`/albums/${article.slug.current}`"
@@ -8,7 +11,6 @@
     >
       <div class="noise-wrapper">
         <img :src="article.image" :alt="article.title" />
-        <!-- Calque de grain -->
         <div class="grain"></div>
       </div>
       <div class="article-overlay">
@@ -19,12 +21,28 @@
   </div>
 </template>
 
-<script setup>
-import { useArticles } from '~/composables/useArticles'
 
-const articles = await useArticles()
-const filteredArticles = articles.filter(a => a.category === 'albums')
+<script setup>
+import { useSanity } from '~/composables/useSanity'
+
+const client = useSanity()
+
+const query = `
+  *[_type == "article"]{
+    _id,
+    title,
+    stitle,
+    slug,
+    date,
+    "image": image.asset->url
+  } | order(date desc)
+`
+
+const { data: filteredArticles, pending, error } = await useAsyncData('articles', () =>
+  client.fetch(query)
+)
 </script>
+
 
 <style scoped>
 /* === Grille === */
