@@ -94,7 +94,7 @@ const { data: filteredArticles, pending, error } = await useAsyncData('articles'
 /* === Hover effets === */
 .article:hover .noise-wrapper img {
   transform: scale(1.05);
-  filter: brightness(3.6) contrast(1);
+  filter: brightness(3.6) contrast(1) grayscale(0.5);
 }
 
 .article:hover .grain {
