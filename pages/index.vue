@@ -5,14 +5,22 @@
       <figcaption class="caption">serie A-75 exp</figcaption>
     </figure>
     <p>
-      Ici, les albums ne sont pas vraiment chroniqués.<br>Ils sont vécus, hantés, parfois rejoués en boucle jusqu’à ce qu’un sens émerge — ou disparaisse.<br>
-Chaque texte publié est moins une critique qu’un fragment de récit, une nouvelle impressionniste, née quelque part entre une écoute tardive et une image mentale persistante. Comme si chaque disque venait réveiller une scène oubliée : un couloir d’hôtel, une station-service au crépuscule, un rêve sous la lumière bleue d’un vieux néon. <br>
-Nous pensons la critique musicale comme un genre narratif à part entière. Un terrain d’expérimentation. Chaque album devient un déclencheur : de fiction, de mémoire, de cinéma intérieur.<br>
-On croise aussi des éclats de visions presque démentes qui ne tiennent plus du tout comme guide de recommandations culturelles.<br>
-Ce site ne classe pas, il déplie.<br>
-Il ouvre des portes.<br>
-Une collection de chroniques-fiction, pour lecteurs curieux, insomniaques, obsessionnels — ou simplement prêts à écouter un disque comme on lirait un film incompris et inoubliable.<br>
-<br>
+      Ici, les albums ne sont pas vraiment chroniqués : ils sont vécus, hantés, rejoués en boucle jusqu’à ce qu’un sens émerge — ou disparaisse.<br><br>
+    Chaque texte est moins une critique qu’un fragment de récit.<br>
+    Une nouvelle impressionniste, née entre une écoute tardive et une image mentale persistante.<br>
+    Comme si chaque disque venait réveiller une scène oubliée : un couloir d’hôtel, une station-service au crépuscule, un rêve sous la lumière bleue d’un vieux néon.<br><br>
+
+    Nous pensons la critique musicale comme un genre narratif à part entière.<br>
+    Un terrain d’expérimentation.<br>
+    Chaque album devient un déclencheur : de fiction, de mémoire, de cinéma intérieur.<br><br>
+
+    On y croise aussi des éclats de visions presque hallucinées, qui n’ont plus rien à voir avec des recommandations culturelles.<br><br>
+
+    Ce site ne classe pas. Il déplie.<br>
+    Il ouvre des portes.<br><br>
+
+    Une collection de chroniques-fiction, pour lecteurs curieux, insomniaques, obsessionnels — ou simplement prêts à écouter un disque comme on lirait un film incompris et inoubliable.
+      <br><br>
 Et si tu regardes, tu entendras</p>
     </div>
   </template>  
