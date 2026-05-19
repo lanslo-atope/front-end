@@ -1,14 +1,5 @@
 <template>
   <div v-if="album" class="album-page">
-    <!-- Bouton retour -->
-    <div class="album-back">
-      <NuxtLink to="/albums" class="back-btn" aria-label="Retour aux albums">
-        <svg viewBox="0 0 50 9">
-          <path d="m0 4.5 5-3m-5 3 5 3m45-3h-77" />
-        </svg>
-      </NuxtLink>
-    </div>
-
     <!-- Grille principale -->
     <div class="album-layout">
       <!-- Colonne gauche -->
@@ -27,6 +18,14 @@
             <p>{{ album.labelAndRelease.label+" — "+formatLabelDate(album.labelAndRelease.releaseYear) }}</p>
           </h2>
         </div>
+         <!-- Bouton retour -->
+    <div class="album-back">
+      <NuxtLink to="/albums" class="back-btn" aria-label="Retour aux albums">
+        <svg viewBox="0 0 50 9">
+          <path d="m0 4.5 5-3m-5 3 5 3m45-3h-77" />
+        </svg>
+      </NuxtLink>
+    </div>
       </div>
 
       <!-- Colonne droite -->
@@ -100,11 +99,11 @@ function formatLabelDate(dateString) {
 
 <style scoped>
 .album-page {
-  max-width: 1000px; /* plus large pour les 2 colonnes */
-  margin: 0 auto;
+  max-width: 1000px;
+  margin: 50px 0 0;
   padding: 20px;
   font-family: "Fira Sans", sans-serif;
-  line-height: 1.;
+  line-height: 1.78;
   color: #222;
 }
 
@@ -119,8 +118,8 @@ function formatLabelDate(dateString) {
 /* Colonne gauche */
 .album-cover img {
   width: 100%;
-  border-radius: 6px;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+  border-radius: 2px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.12);
   background: #f9f9f9;
   margin-bottom: 10px;
 }
@@ -133,10 +132,11 @@ function formatLabelDate(dateString) {
   font-family: "DM Serif Text", serif;
   font-weight: 400;
   font-style: italic;
-  font-size: 2.2rem;
-  margin: 0 0 10px;
+  font-size: 2rem;
+  margin: 0 0 8px;
   color: #e8695f;
-  line-height: 30px;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
 }
 
 .album-artist-title {
@@ -185,9 +185,9 @@ function formatLabelDate(dateString) {
 }
 
 .album-content {
-  font-size: 0.9rem;
-  color: #333;
-  line-height: 1.3;
+  font-size: 1rem;
+  color: #3a3a3a;
+  line-height: 1.78;
 }
 
 .album-content > :first-child::first-letter {
@@ -216,6 +216,8 @@ function formatLabelDate(dateString) {
 /* Bouton retour */
 .album-back {
   margin-bottom: 20px;
+  position: fixed;
+  bottom: 30px;
 }
 
 .back-btn svg {

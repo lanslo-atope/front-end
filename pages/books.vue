@@ -1,16 +1,35 @@
 <template>
-  <div class="articles-grid">
-    <p v-if="pending">Chargement...</p>
-    <p v-else-if="error">Erreur : {{ error.message }}</p>
-    <div
-      v-else
-      v-for="article in data"
-      :key="article._id"
-      class="article"
-    >
-      <img :src="article.image" :alt="article.title" />
-      <h2>{{ article.title }}</h2>
-      <p>{{ article.date }}</p>
+  <div class="archive-page">
+    <header class="archive-header">
+      <h1 class="archive-title">Livres</h1>
+      <p class="archive-subtitle">Notes de lecture</p>
+    </header>
+
+    <p v-if="pending" class="state-msg">Chargement…</p>
+    <p v-else-if="error" class="state-msg">Erreur : {{ error.message }}</p>
+
+    <div v-else>
+      <div v-if="!data || data.length === 0" class="archive-empty">
+        <p>Archive en construction.<br>Les chroniques arrivent.</p>
+      </div>
+
+      <ul v-else class="archive-list">
+        <li
+          v-for="(article, i) in data"
+          :key="article._id"
+          class="archive-item"
+        >
+          <span class="archive-index">{{ String(i + 1).padStart(2, '0') }}</span>
+          <div class="archive-item-body">
+            <div class="archive-item-title">{{ article.title }}</div>
+            <div class="archive-item-meta">
+              <span v-if="article.stitle">{{ article.stitle }}</span>
+              <span v-if="article.stitle && article.date" class="sep">·</span>
+              <span v-if="article.date" class="archive-item-date">{{ formatDate(article.date) }}</span>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </template>
@@ -32,24 +51,124 @@ const { data, pending, error } = await useAsyncData('books', () =>
     } | order(date desc)
   `)
 )
+
+function formatDate(dateString) {
+  if (!dateString) return ''
+  return new Intl.DateTimeFormat('fr-FR', {
+    month: 'short',
+    year: 'numeric',
+  }).format(new Date(dateString))
+}
 </script>
 
 <style scoped>
-.articles-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+.archive-page {
+  max-width: 700px;
+  padding: 60px 20px 80px;
+}
+
+.archive-header {
+  margin-bottom: 50px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.archive-title {
+  font-family: "DM Serif Text", serif;
+  font-weight: 400;
+  font-style: italic;
+  font-size: 2.4rem;
+  color: #222;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+.archive-subtitle {
+  font-family: "Fira Sans", sans-serif;
+  font-size: 0.82rem;
+  font-weight: 300;
+  color: #aaa;
+  margin-top: 8px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.archive-list {
+  list-style: none;
+}
+
+.archive-item {
+  display: flex;
+  align-items: baseline;
   gap: 20px;
-  padding: 20px;
+  padding: 18px 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  transition: opacity 0.2s ease;
 }
 
-.article {
-  border: 1px solid #ccc;
-  padding: 10px;
+.archive-item:hover {
+  opacity: 0.7;
 }
 
-.article img {
-  width: 100%;
-  height: auto;
-  object-fit: cover;
+.archive-index {
+  font-family: "Fira Sans", sans-serif;
+  font-size: 0.75rem;
+  font-weight: 300;
+  color: #ccc;
+  letter-spacing: 0.04em;
+  flex-shrink: 0;
+  min-width: 24px;
+}
+
+.archive-item-body {
+  flex: 1;
+}
+
+.archive-item-title {
+  font-family: "DM Serif Text", serif;
+  font-style: italic;
+  font-size: 1.15rem;
+  color: #222;
+  line-height: 1.3;
+}
+
+.archive-item-meta {
+  font-family: "Fira Sans", sans-serif;
+  font-size: 0.82rem;
+  font-weight: 300;
+  color: #888;
+  margin-top: 4px;
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.archive-item-date {
+  font-size: 10px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #bbb;
+}
+
+.sep {
+  color: #ccc;
+  font-size: 0.7rem;
+}
+
+.archive-empty {
+  font-family: "Fira Sans", sans-serif;
+  font-size: 0.95rem;
+  font-style: italic;
+  color: #aaa;
+  line-height: 1.8;
+  padding: 20px 0;
+}
+
+.state-msg {
+  font-family: "Fira Sans", sans-serif;
+  font-size: 0.9rem;
+  color: #999;
+  font-style: italic;
+  padding: 20px 0;
 }
 </style>

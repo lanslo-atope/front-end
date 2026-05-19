@@ -1,26 +1,27 @@
 <template>
-  <div class="articles-grid">
-    <p v-if="pending">Chargement...</p>
-    <p v-else-if="error">Erreur : {{ error.message }}</p>
-    <NuxtLink
-      v-else
-      v-for="article in filteredArticles"
-      :key="article._id"
-      :to="`/albums/${article.slug.current}`"
-      class="article"
-    >
-      <div class="noise-wrapper">
-        <img :src="article.image" :alt="article.title" />
-        <div class="grain"></div>
-      </div>
-      <div class="article-overlay">
-        <div class="article-title">{{ article.title }}</div>
-        <div class="article-stitle" v-if="article.stitle">{{ article.stitle }}</div>
-      </div>
-    </NuxtLink>
+  <div class="albums-archive">
+    <p v-if="pending" class="state-msg">Chargement…</p>
+    <p v-else-if="error" class="state-msg">Erreur : {{ error.message }}</p>
+    <div v-else class="albums-grid">
+      <NuxtLink
+        v-for="article in filteredArticles"
+        :key="article._id"
+        :to="`/albums/${article.slug.current}`"
+        class="album-item"
+      >
+        <div class="album-cover-wrapper">
+          <img :src="article.image" :alt="article.title" class="album-cover-img" />
+          <div class="grain"></div>
+        </div>
+        <div class="album-info">
+          <div class="album-info-title">{{ article.title }}</div>
+          <div class="album-info-artist" v-if="article.stitle">{{ article.stitle }}</div>
+          <div class="album-info-date" v-if="article.date">{{ formatDate(article.date) }}</div>
+        </div>
+      </NuxtLink>
+    </div>
   </div>
 </template>
-
 
 <script setup>
 import { useSanity } from '~/composables/useSanity'
@@ -41,45 +42,49 @@ const query = `
 const { data: filteredArticles, pending, error } = await useAsyncData('articles', () =>
   client.fetch(query)
 )
+
+function formatDate(dateString) {
+  if (!dateString) return ''
+  return new Intl.DateTimeFormat('fr-FR', {
+    month: 'short',
+    year: 'numeric',
+  }).format(new Date(dateString))
+}
 </script>
 
-
 <style scoped>
-/* === Grille === */
-.articles-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 35px;
-  margin: 50px 0 0;
-  padding: 20px;
+.albums-archive {
+  padding: 50px 20px 60px;
 }
 
-/* === Conteneur === */
-.article {
-  position: relative;
-  overflow: hidden;
-  border-radius: 15px; 
+.albums-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  gap: 50px 28px;
 }
-.article-title{
-  font-style: italic;
-  color: #e8695f;
+
+.album-item {
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
 }
 
 /* === Image === */
-.noise-wrapper {
+.album-cover-wrapper {
   position: relative;
+  overflow: hidden;
 }
 
-.noise-wrapper img {
+.album-cover-img {
   width: 100%;
   height: auto;
-  object-fit: cover;
   display: block;
-  filter: brightness(1.2) contrast(0.9);
-  transition: transform 0.3s ease, filter 0.5s ease;
+  object-fit: cover;
+  filter: brightness(1.05) contrast(0.95);
+  transition: filter 0.5s ease, transform 0.4s ease;
 }
 
-/* === Calque grain === */
+/* === Grain === */
 .grain {
   position: absolute;
   inset: 0;
@@ -88,35 +93,62 @@ const { data: filteredArticles, pending, error } = await useAsyncData('articles'
   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 700 700'><filter id='noiseFilter'><feTurbulence type='fractalNoise' baseFrequency='2.5' numOctaves='5' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23noiseFilter)' /></svg>");
   background-size: cover;
   mix-blend-mode: overlay;
-  transition: opacity 0.2s ease;
+  transition: opacity 0.4s ease;
 }
 
-/* === Hover effets === */
-.article:hover .noise-wrapper img {
-  transform: scale(1.05);
-  filter: brightness(3.6) contrast(1) grayscale(0.5);
+/* === Hover === */
+.album-item:hover .album-cover-img {
+  filter: brightness(1.12) contrast(1.05) saturate(0.75);
+  transform: scale(1.02);
 }
 
-.article:hover .grain {
-  opacity: 1; /* Intensité du grain */
+.album-item:hover .grain {
+  opacity: 0.55;
 }
 
-/* === Overlay texte === */
-.article-overlay {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  padding: 10px;
-  color: #111;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  z-index: 2;
+/* === Texte toujours visible === */
+.album-info {
+  padding: 10px 0 0;
+  margin-top: 10px;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
 }
 
+.album-info-title {
+  font-family: "DM Serif Text", serif;
+  font-style: italic;
+  font-size: 1rem;
+  line-height: 1.25;
+  color: #222;
+  transition: color 0.2s ease;
+}
 
-.article:hover .article-overlay {
-  opacity: 1;
+.album-item:hover .album-info-title {
+  color: #e8695f;
+}
+
+.album-info-artist {
+  font-family: "Fira Sans", sans-serif;
+  font-size: 0.82rem;
+  font-weight: 300;
+  color: #777;
+  margin-top: 4px;
+}
+
+.album-info-date {
+  font-family: "Fira Sans", sans-serif;
+  font-size: 10px;
+  font-weight: 400;
+  color: #bbb;
+  margin-top: 5px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.state-msg {
+  font-family: "Fira Sans", sans-serif;
+  font-size: 0.9rem;
+  color: #999;
+  font-style: italic;
+  padding: 20px 0;
 }
 </style>
