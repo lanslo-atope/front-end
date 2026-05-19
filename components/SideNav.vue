@@ -14,7 +14,7 @@
     </nav>
 
     <div class="side-bottom">
-      <span class="side-wordmark">TWBC</span>
+      <img src="/assets/logo.png" alt="TWBC" class="side-bottom-logo" />
     </div>
   </aside>
 </template>
@@ -58,8 +58,7 @@
 }
 
 .side-link {
-  writing-mode: vertical-rl;
-  text-orientation: mixed;
+  writing-mode: sideways-lr;
   font-family: "Fira Sans", sans-serif;
   font-size: 0.6rem;
   font-weight: 400;
@@ -84,15 +83,12 @@
   justify-content: center;
 }
 
-.side-wordmark {
-  writing-mode: vertical-rl;
-  transform: rotate(180deg);
-  font-family: "DM Serif Text", serif;
-  font-style: italic;
-  font-size: 1.3rem;
-  color: rgba(30, 27, 24, 0.18);
-  letter-spacing: 0.04em;
-  user-select: none;
+.side-bottom-logo {
+  width: 38px;
+  height: auto;
+  display: block;
+  transform: rotate(-90deg);
+  opacity: 0.55;
 }
 
 /* Mobile : bande horizontale en haut */
@@ -149,10 +145,10 @@
     align-items: center;
   }
 
-  .side-wordmark {
-    writing-mode: horizontal-tb;
+  .side-bottom-logo {
     transform: none;
-    font-size: 0.85rem;
+    width: 28px;
+    opacity: 0.5;
   }
 }
 </style>
