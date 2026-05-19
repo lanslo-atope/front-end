@@ -1,162 +1,247 @@
 <template>
-  <div class="a-propos">
-    <figure class="polaroid">
-      <img src="https://cdn.sanity.io/images/w6f4ec13/production/7c54b1bf9c7db834fd7ce03c16144b1906731297-4032x3024.jpg?w=250" alt="album cover" />
-      <figcaption class="caption">serie A-75 exp</figcaption>
-    </figure>
-    <p>
-      Ici, les albums ne sont pas vraiment chroniqués : ils sont vécus, hantés, rejoués en boucle jusqu'à ce qu'un sens émerge — ou disparaisse.<br>
-      Chaque texte est moins une critique qu'un fragment de récit.<br>
-      Une nouvelle impressionniste, née entre une écoute tardive et une image mentale persistante.<br>
-      Comme si chaque disque venait réveiller une scène oubliée : un couloir d'hôtel, une station-service au crépuscule, un rêve sous la lumière bleue d'un vieux néon.<br>
-      Nous pensons la critique musicale comme un genre narratif à part entière.<br>
-      Un terrain d'expérimentation.<br>
-      Chaque album devient un déclencheur : de fiction, de mémoire, de cinéma intérieur.<br>
-      On y croise aussi des éclats de visions presque hallucinées, qui n'ont plus rien à voir avec des recommandations culturelles.<br>
-      Ce site ne classe pas. Il déplie.<br>
-      Il ouvre des portes.<br>
-      Une collection de chroniques-fiction, pour lecteurs curieux, insomniaques, obsessionnels — ou simplement prêts à écouter un disque comme on lirait un film incompris et inoubliable.
-      <br><br><strong>Si tu lis, tu entendras</strong>
-    </p>
+  <div class="home">
+    <!-- Fond photo désaturé -->
+    <div class="home-bg" aria-hidden="true"></div>
+    <!-- Grain analogique -->
+    <div class="home-grain" aria-hidden="true"></div>
 
-    <div v-if="latest && latest.length" class="latest">
-      <NuxtLink
-        v-for="item in latest"
-        :key="item._id"
-        :to="`/albums/${item.slug.current}`"
-        class="latest-item"
-      >
-        <span class="latest-title">{{ item.title }}</span>
-        <span v-if="item.stitle" class="latest-artist">{{ item.stitle }}</span>
+    <div class="home-body">
+      <!-- Logo -->
+      <div class="home-logo">
+        <img src="/assets/logo.png" alt="Te Voilà Bien Consumé" />
+      </div>
+
+      <!-- Surtitre éditorial -->
+      <div class="home-label-block">
+        <span class="home-label">Chroniques narratives</span>
+        <span class="home-label-line"></span>
+      </div>
+
+      <!-- Titre principal -->
+      <h1 class="home-title">
+        Te Voilà<br>Bien Consumé
+      </h1>
+
+      <!-- Sous-texte -->
+      <p class="home-desc">
+        Des récits, des impressions, des analyses<br>
+        et des fragments autour de musiques<br>
+        qui nous traversent.<br>
+        Une archive subjective et vivante.
+      </p>
+
+      <!-- CTA -->
+      <NuxtLink to="/albums" class="home-cta">
+        Lire les dernières chroniques
+        <span class="home-cta-arrow">→</span>
       </NuxtLink>
+
+      <!-- Citation manifeste -->
+      <div class="home-quote">
+        <span class="home-quote-star">✦</span>
+        <div class="home-quote-text">
+          <p>Il n'y a rien de plus brûlant<br>que ce qui reste après la flamme.</p>
+          <p class="home-quote-sig">— TWBC</p>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { useSanity } from '~/composables/useSanity'
-
-const client = useSanity()
-
-const { data: latest } = await useAsyncData('latest', () =>
-  client.fetch(`
-    *[_type == "article" && category == "albums"] | order(date desc)[0..2] {
-      _id, title, stitle, slug
-    }
-  `)
-)
+definePageMeta({ layout: 'home' })
 </script>
 
-<style>
-.a-propos {
-  max-width: 680px;
-  margin: 0 auto;
-  padding: 70px 20px 100px;
-  line-height: 1.65;
-  font-family: "Fira Sans", serif;
-  font-size: 1rem;
-  color: var(--ink-mid);
+<style scoped>
+/* === Structure === */
+.home {
   position: relative;
-  font-style: italic;
+  min-height: 100vh;
+  background: #0c0a08;
+  padding-right: 96px; /* réserve l'espace pour SideNav */
+  overflow: hidden;
 }
 
-.a-propos p {
-  position: relative;
-  z-index: 2;
-}
-
-.a-propos strong {
-  font-family: "DM Serif Text", serif;
-  font-size: 1.05rem;
-  font-style: italic;
-  font-weight: 400;
-  letter-spacing: 0.01em;
-  color: var(--ink);
-}
-
-/* Polaroid */
-.polaroid {
-  width: 140px;
-  background: white;
-  padding: 8px 8px 18px 8px;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
-  border-radius: 2px;
-  text-align: center;
+/* === Fond photo === */
+.home-bg {
   position: absolute;
-  left: -22%;
-  top: 18%;
-  transform: rotate(-5deg);
-  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  inset: 0;
+  background-image: url('https://cdn.sanity.io/images/w6f4ec13/production/ada85cf666b6d2979ac09bf40d766ca94c0757e3-4032x3024.jpg');
+  background-size: cover;
+  background-position: center;
+  opacity: 0.22;
+  filter: grayscale(1) brightness(0.6);
+}
+
+/* === Grain analogique === */
+.home-grain {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 700 700'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.5'/></svg>");
+  background-size: 300px;
+  opacity: 0.07;
+  mix-blend-mode: overlay;
+}
+
+/* === Corps principal === */
+.home-body {
+  position: relative;
   z-index: 1;
-  opacity: 0.7;
-}
-
-.polaroid img {
-  width: 100%;
-  display: block;
-  border-radius: 1px;
-}
-
-.caption {
-  margin-top: 8px;
-  font-size: 0.78rem;
-  color: var(--ink-soft);
-  font-family: "Fira Sans", sans-serif;
-  font-style: normal;
-  font-weight: 300;
-  letter-spacing: 0.03em;
-}
-
-.polaroid:hover {
-  transform: rotate(-2deg) scale(1.04);
-  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.2);
-}
-
-.a-propos p::first-letter {
-  float: left;
-  font-size: 4.2rem;
-  font-family: "DM Serif Text", serif;
-  line-height: 0.78;
-  padding-right: 8px;
-  padding-top: 10px;
-  font-weight: 100;
-  color: #222;
-}
-
-/* Dernières chroniques */
-.latest {
-  margin-top: 80px;
+  min-height: 100vh;
+  padding: 48px 64px 56px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  border-top: 1px solid rgba(0, 0, 0, 0.07);
-  padding-top: 28px;
+  max-width: 820px;
 }
 
-.latest-item {
+/* === Logo === */
+.home-logo img {
+  width: 44px;
+  height: auto;
+  display: block;
+  margin-bottom: 52px;
+  filter: brightness(10) saturate(0);
+  opacity: 0.9;
+}
+
+/* === Surtitre === */
+.home-label-block {
   display: flex;
-  align-items: baseline;
-  gap: 10px;
-  text-decoration: none;
-  font-style: normal;
-  transition: opacity 0.25s ease;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
 }
 
-.latest-item:hover {
-  opacity: 0.5;
-}
-
-.latest-title {
-  font-family: "DM Serif Text", serif;
-  font-style: italic;
-  font-size: 0.95rem;
-  color: var(--ink-mid);
-}
-
-.latest-artist {
+.home-label {
   font-family: "Fira Sans", sans-serif;
-  font-size: 0.78rem;
+  font-size: 0.58rem;
+  font-weight: 400;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(232, 105, 95, 0.72);
+}
+
+.home-label-line {
+  display: block;
+  width: 26px;
+  height: 1px;
+  background: #e8695f;
+  opacity: 0.55;
+}
+
+/* === Titre === */
+.home-title {
+  font-family: "Fira Sans", sans-serif;
+  font-weight: 900;
+  font-size: clamp(3.2rem, 8.5vw, 7rem);
+  line-height: 0.92;
+  letter-spacing: -0.025em;
+  text-transform: uppercase;
+  color: #e8695f;
+  margin: 0 0 44px;
+}
+
+/* === Sous-texte === */
+.home-desc {
+  font-family: "Fira Sans", sans-serif;
+  font-size: 0.8rem;
   font-weight: 300;
-  color: var(--ink-muted);
+  line-height: 1.72;
+  color: rgba(215, 208, 198, 0.58);
+  margin: 0 0 44px;
+  max-width: 360px;
+}
+
+/* === CTA === */
+.home-cta {
+  font-family: "Fira Sans", sans-serif;
+  font-size: 0.62rem;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #e8695f;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  border-bottom: 1px solid rgba(232, 105, 95, 0.35);
+  padding-bottom: 4px;
+  transition: border-color 0.25s ease, gap 0.25s ease;
+  align-self: flex-start;
+  margin-bottom: auto;
+}
+
+.home-cta:hover {
+  border-color: #e8695f;
+  gap: 16px;
+}
+
+.home-cta-arrow {
+  transition: transform 0.25s ease;
+}
+
+.home-cta:hover .home-cta-arrow {
+  transform: translateX(4px);
+}
+
+/* === Citation === */
+.home-quote {
+  margin-top: 72px;
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  max-width: 360px;
+}
+
+.home-quote-star {
+  font-size: 0.65rem;
+  color: #e8695f;
+  opacity: 0.6;
+  flex-shrink: 0;
+  margin-top: 3px;
+}
+
+.home-quote-text p {
+  font-family: "Fira Sans", sans-serif;
+  font-size: 0.58rem;
+  font-weight: 300;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(215, 208, 198, 0.38);
+  line-height: 1.65;
+  margin: 0;
+}
+
+.home-quote-text .home-quote-sig {
+  margin-top: 8px;
+  color: rgba(215, 208, 198, 0.22);
+}
+
+/* === Responsive === */
+@media (max-width: 768px) {
+  .home {
+    padding-right: 0;
+    padding-top: 50px; /* hauteur de la bande mobile SideNav */
+  }
+
+  .home-body {
+    padding: 40px 28px 60px;
+    min-height: calc(100vh - 50px);
+  }
+
+  .home-logo {
+    display: none; /* logo déjà dans SideNav mobile */
+  }
+
+  .home-title {
+    font-size: clamp(2.8rem, 13vw, 5rem);
+  }
+}
+
+@media (max-width: 480px) {
+  .home-body {
+    padding: 32px 20px 48px;
+  }
 }
 </style>
