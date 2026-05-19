@@ -4,15 +4,18 @@
       <NavBar />
     </nav>
     <main>
-      <NuxtPage />
+      <slot />
     <div class="background" />
+    <Footer />
     </main>
   </div>
+  
 </template>
 
 
 <script setup>
 import NavBar from '~/components/NavBar.vue'
+import  Footer from '~/components/Footer.vue'
 </script>
 
 <style scoped>
@@ -26,12 +29,13 @@ import NavBar from '~/components/NavBar.vue'
 
 /* Contenu principal */
 main {
-  margin-top: 70px; /* Laisse de la place pour la navigation */
+  flex: 1;
   flex-grow: 1; /* Prend tout l'espace restant */
   padding: 20px;
   overflow-y: auto; /* Permet de scroller si le contenu dépasse */
   height: 100%; /* Assure une pleine hauteur */
   z-index: 1;
+  
 }
 .background {
   position: fixed;

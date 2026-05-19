@@ -6,8 +6,8 @@ export default defineNuxtPlugin(() => {
   const client = createClient({
     projectId: config.public.sanityProjectId,
     dataset: config.public.sanityDataset,
-    apiVersion: '2025-08-01',
-    useCdn: true,
+    apiVersion: config.public.sanityApiVersion as string,
+    useCdn: config.public.useCdn as boolean,
   })
 
   return {

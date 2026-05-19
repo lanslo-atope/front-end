@@ -1,0 +1,40 @@
+name: Deploy to o2switch
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch: # permet le déclenchement manuel ou via webhook Sanity
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Generate static site
+        env:
+          NUXT_PUBLIC_SANITY_PROJECT_ID: ${{ secrets.NUXT_PUBLIC_SANITY_PROJECT_ID }}
+          NUXT_PUBLIC_SANITY_DATASET: ${{ secrets.NUXT_PUBLIC_SANITY_DATASET }}
+          NUXT_PUBLIC_SANITY_API_VERSION: ${{ secrets.NUXT_PUBLIC_SANITY_API_VERSION }}
+        run: npm run generate
+
+      - name: Deploy via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: .output/public/
+          server-dir: ${{ secrets.FTP_SERVER_DIR }}

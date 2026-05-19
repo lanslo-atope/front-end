@@ -28,7 +28,7 @@ import { useSanity } from '~/composables/useSanity'
 const client = useSanity()
 
 const query = `
-  *[_type == "article"]{
+  *[_type == "article" && category == "albums"]{
     _id,
     title,
     stitle,
@@ -50,7 +50,7 @@ const { data: filteredArticles, pending, error } = await useAsyncData('articles'
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   gap: 35px;
-  margin: 10px auto;
+  margin: 50px 0 0;
   padding: 20px;
 }
 

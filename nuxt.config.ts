@@ -1,7 +1,13 @@
 export default defineNuxtConfig({
   compatibilityDate: '2024-11-01',
   devtools: { enabled: false },
-  pages: true, // Assure que Nuxt utilise le système de pages
+  pages: true,
+  nitro: {
+    prerender: {
+      crawlLinks: true,
+      routes: ['/'],
+    },
+  },
   app: {
     head: {
       title: 'Te voilà bien consumé',
