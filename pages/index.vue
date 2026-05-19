@@ -152,10 +152,11 @@ const { data: latest } = await useAsyncData('latest', () =>
 /* === Titre === */
 .home-title {
   font-family: "League Gothic", sans-serif;
-  font-variation-settings: "wdth" 75;
+  font-weight: 400;
+  font-stretch: condensed;
   font-size: clamp(5rem, 12vw, 12rem);
-  line-height: 0.88;
-  letter-spacing: -0.015em;
+  line-height: 0.9;
+  letter-spacing: -0.01em;
   text-transform: uppercase;
   color: #e8695f;
   margin: 0 0 44px;
