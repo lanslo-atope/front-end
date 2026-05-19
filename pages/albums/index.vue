@@ -8,10 +8,10 @@
       </p>
       <div class="albums-grid">
         <NuxtLink
-          v-for="(article, index) in filteredArticles"
+          v-for="article in filteredArticles"
           :key="article._id"
           :to="`/albums/${article.slug.current}`"
-          :class="['album-item', { 'album-item--featured': index === 0 }]"
+          class="album-item"
         >
           <div class="album-cover-wrapper">
             <img :src="article.image" :alt="article.title" class="album-cover-img" />
@@ -68,13 +68,16 @@ function formatDate(dateString) {
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: #bbb;
-  margin-bottom: 30px;
+  margin-bottom: 35px;
 }
 
+/* Grille organique — 5 colonnes, remplissage dense */
 .albums-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 50px 28px;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 44px 20px;
+  grid-auto-flow: dense;
+  align-items: start;
 }
 
 .album-item {
@@ -83,13 +86,19 @@ function formatDate(dateString) {
   cursor: pointer;
 }
 
-/* Premier article mis en avant */
-.album-item--featured {
+/*
+  Variations d'échelle discrètes via nth-child.
+  Positions 1, 6, 10, 15, 19... — alternance de 4 et 3 items entre les plus grands.
+  Pas de pattern visuellement prévisible, pas de hero dominant.
+*/
+.album-item:nth-child(9n+1),
+.album-item:nth-child(9n+6) {
   grid-column: span 2;
 }
 
-.album-item--featured .album-info-title {
-  font-size: 1.2rem;
+.album-item:nth-child(9n+1) .album-info-title,
+.album-item:nth-child(9n+6) .album-info-title {
+  font-size: 1.1rem;
 }
 
 /* === Image === */
@@ -131,15 +140,15 @@ function formatDate(dateString) {
 
 /* === Texte === */
 .album-info {
-  padding: 10px 0 0;
-  margin-top: 10px;
+  padding: 9px 0 0;
+  margin-top: 9px;
   border-top: 1px solid rgba(0, 0, 0, 0.08);
 }
 
 .album-info-title {
   font-family: "DM Serif Text", serif;
   font-style: italic;
-  font-size: 1rem;
+  font-size: 0.92rem;
   line-height: 1.25;
   color: #222;
   transition: color 0.2s ease;
@@ -151,10 +160,10 @@ function formatDate(dateString) {
 
 .album-info-artist {
   font-family: "Fira Sans", sans-serif;
-  font-size: 0.82rem;
+  font-size: 0.78rem;
   font-weight: 300;
-  color: #777;
-  margin-top: 4px;
+  color: #888;
+  margin-top: 3px;
 }
 
 .album-info-date {
@@ -162,7 +171,7 @@ function formatDate(dateString) {
   font-size: 10px;
   font-weight: 400;
   color: #bbb;
-  margin-top: 5px;
+  margin-top: 4px;
   letter-spacing: 0.06em;
   text-transform: uppercase;
 }
@@ -176,20 +185,18 @@ function formatDate(dateString) {
 }
 
 /* Responsive */
-@media (max-width: 700px) {
+@media (max-width: 900px) {
   .albums-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  .album-item--featured {
-    grid-column: span 2;
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 
-@media (max-width: 420px) {
+@media (max-width: 600px) {
   .albums-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
   }
-  .album-item--featured {
+  .album-item:nth-child(9n+1),
+  .album-item:nth-child(9n+6) {
     grid-column: span 1;
   }
 }
