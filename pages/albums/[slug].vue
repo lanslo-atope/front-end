@@ -140,7 +140,7 @@ function formatLabelDate(dateString) {
   font-style: italic;
   font-size: 2rem;
   margin: 0 0 6px;
-  color: #e8695f;
+  color: var(--accent);
   line-height: 1.15;
   letter-spacing: -0.02em;
 }
@@ -148,14 +148,14 @@ function formatLabelDate(dateString) {
 .album-artist-title {
   font-size: 1rem;
   font-weight: 300;
-  color: #888;
+  color: var(--ink-soft);
   margin: 0 0 10px;
 }
 
 .album-label-title {
   font-size: 0.78rem;
   font-weight: 300;
-  color: #aaa;
+  color: var(--ink-muted);
   margin: 0 0 12px;
   display: flex;
   align-items: center;
@@ -180,7 +180,7 @@ function formatLabelDate(dateString) {
 
 .album-content {
   font-size: 1rem;
-  color: #3a3a3a;
+  color: var(--ink-mid);
   line-height: 1.78;
 }
 
@@ -208,10 +208,10 @@ function formatLabelDate(dateString) {
   align-items: center;
   gap: 8px;
   font-size: 0.85rem;
-  color: #aaa;
+  color: var(--ink-muted);
   margin-top: 50px;
   padding-top: 20px;
-  border-top: 1px solid rgba(0,0,0,0.07);
+  border-top: 1px solid var(--line);
   font-weight: 300;
   font-style: italic;
 }
@@ -227,7 +227,7 @@ function formatLabelDate(dateString) {
 .album-next {
   margin-top: 70px;
   padding-top: 24px;
-  border-top: 1px solid rgba(0,0,0,0.06);
+  border-top: 1px solid var(--line-soft);
 }
 
 .album-next-label {
@@ -236,7 +236,7 @@ function formatLabelDate(dateString) {
   font-size: 10px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: #ccc;
+  color: var(--ink-ghost);
   margin-bottom: 10px;
 }
 
@@ -244,13 +244,13 @@ function formatLabelDate(dateString) {
   font-family: "DM Serif Text", serif;
   font-style: italic;
   font-size: 1.05rem;
-  color: #333;
+  color: var(--ink-mid);
   text-decoration: none;
   transition: color 0.2s ease;
 }
 
 .album-next-link:hover {
-  color: #e8695f;
+  color: var(--accent);
 }
 
 .album-next-artist {
@@ -258,7 +258,7 @@ function formatLabelDate(dateString) {
   font-style: normal;
   font-size: 0.82rem;
   font-weight: 300;
-  color: #aaa;
+  color: var(--ink-muted);
 }
 
 /* Bouton retour */
@@ -275,12 +275,12 @@ function formatLabelDate(dateString) {
   fill: none;
   stroke-width: 1;
   transition: transform 0.15s ease;
-  color: #aaa;
+  color: var(--ink-muted);
 }
 
 .back-btn:hover svg {
   transform: translateX(-4px);
-  color: #333;
+  color: var(--ink-mid);
 }
 
 .loading-msg {

@@ -5,6 +5,39 @@
 </template>
 
 <style>
+/* ============================================================
+   PALETTE — Te Voilà Bien Consumé
+   Atmosphère : papier vieilli, encre, archive, terracotta brûlée
+   ============================================================ */
+:root {
+  /* Accent */
+  --accent:        #e8695f;   /* terracotta brûlée — couleur signature */
+  --accent-soft:   #eda49a;   /* rose poussiéreux — hover doux */
+  --accent-dim:    #c4544a;   /* plus sombre, plus brûlé — état actif */
+  --accent-ghost:  rgba(232, 105, 95, 0.10);  /* teinture très légère */
+
+  /* Encre — texte */
+  --ink:           #1e1b18;   /* noir encre légèrement chaud */
+  --ink-mid:       #3d3830;   /* corps de texte, charbon */
+  --ink-soft:      #6a6460;   /* secondaire, descriptions */
+  --ink-muted:     #96908b;   /* métadonnées, légendes */
+  --ink-ghost:     #b4afaa;   /* très discret — dates, compteurs */
+
+  /* Papier — fonds */
+  --paper:         #f5f2ec;   /* papier vieilli, off-white chaud */
+  --paper-warm:    #ede8df;   /* légèrement plus chaud, vieux journal */
+  --paper-dark:    #1a1714;   /* presque noir, encre profonde */
+
+  /* Séparateurs */
+  --line:          rgba(30, 27, 24, 0.08);   /* séparateurs intérieurs */
+  --line-strong:   rgba(30, 27, 24, 0.16);   /* nav, footer, sections */
+  --line-soft:     rgba(30, 27, 24, 0.05);   /* quasi invisible */
+
+  /* Overlays image */
+  --overlay-dark:  rgba(5, 3, 2, 0.72);
+  --overlay-mid:   rgba(5, 3, 2, 0.38);
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -39,7 +72,7 @@ a, .article {
   margin: 0;
   font-size: 1.1rem;
   line-height: 1.25;
-  color: #222;
+  color: var(--ink);
   letter-spacing: -0.01em;
 }
 
@@ -47,7 +80,7 @@ a, .article {
   font-family: "Fira Sans", sans-serif;
   font-size: 0.82rem;
   font-weight: 300;
-  color: #777;
+  color: var(--ink-soft);
   margin-top: 3px;
 }
 
@@ -55,7 +88,7 @@ a, .article {
   font-family: "Fira Sans", sans-serif;
   font-size: 10px;
   font-weight: 400;
-  color: #aaa;
+  color: var(--ink-muted);
   margin-top: 5px;
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -67,7 +100,7 @@ a, .article {
   align-items: center;
   gap: 8px;
   font-size: 0.88rem;
-  color: #888;
+  color: var(--ink-soft);
   margin: 35px 0 25px;
   font-weight: 300;
   font-style: italic;
@@ -94,6 +127,6 @@ a, .article {
   font-weight: 400;
   line-height: 1.78;
   margin-bottom: 20px;
-  color: #3a3a3a;
+  color: var(--ink-mid);
 }
 </style>

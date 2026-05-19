@@ -68,7 +68,7 @@ function handleClick(event, article) {
   font-size: 10px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: #bbb;
+  color: var(--ink-ghost);
   margin-bottom: 24px;
 }
 

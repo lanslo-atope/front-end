@@ -55,7 +55,7 @@ const { data: latest } = await useAsyncData('latest', () =>
   line-height: 1.85;
   font-family: "Fira Sans", serif;
   font-size: 1rem;
-  color: #333;
+  color: var(--ink-mid);
   position: relative;
   font-style: italic;
 }
@@ -71,7 +71,7 @@ const { data: latest } = await useAsyncData('latest', () =>
   font-style: italic;
   font-weight: 400;
   letter-spacing: 0.01em;
-  color: #222;
+  color: var(--ink);
 }
 
 /* Polaroid */
@@ -100,7 +100,7 @@ const { data: latest } = await useAsyncData('latest', () =>
 .caption {
   margin-top: 8px;
   font-size: 0.78rem;
-  color: #555;
+  color: var(--ink-soft);
   font-family: "Fira Sans", sans-serif;
   font-style: normal;
   font-weight: 300;
@@ -150,13 +150,13 @@ const { data: latest } = await useAsyncData('latest', () =>
   font-family: "DM Serif Text", serif;
   font-style: italic;
   font-size: 0.95rem;
-  color: #333;
+  color: var(--ink-mid);
 }
 
 .latest-artist {
   font-family: "Fira Sans", sans-serif;
   font-size: 0.78rem;
   font-weight: 300;
-  color: #aaa;
+  color: var(--ink-muted);
 }
 </style>

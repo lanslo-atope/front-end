@@ -52,7 +52,7 @@ function toggleTheme() {
 .site-footer {
   padding: 20px;
   font-size: 0.9rem;
-  border-top: 1px solid rgba(0, 0, 0, 0.2);
+  border-top: 1px solid var(--line-strong);
 }
 
 .footer-content {
@@ -64,7 +64,7 @@ function toggleTheme() {
   font-family: "Fira Sans", sans-serif;
   font-weight: 400;
   font-size: 0.7rem;
-  color: #333;
+  color: var(--ink-mid);
   width: 100%;
 }
 
@@ -91,12 +91,12 @@ function toggleTheme() {
 
 .newsletter input {
   padding: 6px 10px;
-  border: 1px solid #ccc;
+  border: 1px solid var(--ink-ghost);
   border-radius: 4px;
 }
 
 .newsletter button {
-  background: #e8695f;
+  background: var(--accent);
   border: none;
   padding: 6px 12px;
   border-radius: 4px;

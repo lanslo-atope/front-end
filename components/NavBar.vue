@@ -70,7 +70,9 @@ nav {
   height: 60px;
   padding: 0 20px;
   z-index: 1000;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  border-bottom: 1px solid var(--line-strong);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
 }
 
 .stagger-link {
@@ -102,7 +104,7 @@ ul li {
 
 a {
   text-decoration: none;
-  color: black;
+  color: var(--ink);
   font-family: "Fira Sans", sans-serif;
   font-weight: 400;
   font-size: 1rem;

@@ -70,7 +70,7 @@ function formatDate(dateString) {
 .archive-header {
   margin-bottom: 36px;
   padding-bottom: 20px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid var(--line-strong);
 }
 
 .archive-title {
@@ -78,7 +78,7 @@ function formatDate(dateString) {
   font-weight: 400;
   font-style: italic;
   font-size: 2.4rem;
-  color: #222;
+  color: var(--ink);
   letter-spacing: -0.02em;
   line-height: 1;
 }
@@ -103,7 +103,7 @@ function formatDate(dateString) {
   align-items: baseline;
   gap: 20px;
   padding: 18px 0;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  border-bottom: 1px solid var(--line-soft);
   transition: opacity 0.2s ease;
 }
 
@@ -115,7 +115,7 @@ function formatDate(dateString) {
   font-family: "Fira Sans", sans-serif;
   font-size: 0.75rem;
   font-weight: 300;
-  color: #ccc;
+  color: var(--ink-ghost);
   letter-spacing: 0.04em;
   flex-shrink: 0;
   min-width: 24px;
@@ -129,7 +129,7 @@ function formatDate(dateString) {
   font-family: "DM Serif Text", serif;
   font-style: italic;
   font-size: 1.15rem;
-  color: #222;
+  color: var(--ink);
   line-height: 1.3;
 }
 
@@ -137,7 +137,7 @@ function formatDate(dateString) {
   font-family: "Fira Sans", sans-serif;
   font-size: 0.82rem;
   font-weight: 300;
-  color: #888;
+  color: var(--ink-soft);
   margin-top: 4px;
   display: flex;
   gap: 6px;
@@ -148,11 +148,11 @@ function formatDate(dateString) {
   font-size: 10px;
   letter-spacing: 0.05em;
   text-transform: uppercase;
-  color: #bbb;
+  color: var(--ink-ghost);
 }
 
 .sep {
-  color: #ccc;
+  color: var(--ink-ghost);
   font-size: 0.7rem;
 }
 
@@ -160,7 +160,7 @@ function formatDate(dateString) {
   font-family: "Fira Sans", sans-serif;
   font-size: 0.95rem;
   font-style: italic;
-  color: #aaa;
+  color: var(--ink-muted);
   line-height: 1.8;
   padding: 20px 0;
 }
@@ -168,7 +168,7 @@ function formatDate(dateString) {
 .state-msg {
   font-family: "Fira Sans", sans-serif;
   font-size: 0.9rem;
-  color: #999;
+  color: var(--ink-muted);
   font-style: italic;
   padding: 20px 0;
 }
