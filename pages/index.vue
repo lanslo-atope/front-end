@@ -151,11 +151,11 @@ const { data: latest } = await useAsyncData('latest', () =>
 
 /* === Titre === */
 .home-title {
-  font-family: "Barlow Condensed", sans-serif;
-  font-weight: 700;
-  font-size: clamp(3.2rem, 8.5vw, 7rem);
-  line-height: 0.92;
-  letter-spacing: -0.025em;
+  font-family: "League Gothic", sans-serif;
+  font-variation-settings: "wdth" 75;
+  font-size: clamp(5rem, 12vw, 12rem);
+  line-height: 0.88;
+  letter-spacing: -0.015em;
   text-transform: uppercase;
   color: #e8695f;
   margin: 0 0 44px;
