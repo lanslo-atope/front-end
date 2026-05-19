@@ -78,7 +78,7 @@ const { data: latest } = await useAsyncData('latest', () =>
 .home-bg {
   position: absolute;
   inset: 0;
-  background-image: url('https://cdn.sanity.io/images/w6f4ec13/production/ada85cf666b6d2979ac09bf40d766ca94c0757e3-4032x3024.jpg');
+  background-image: url('/assets/accueil-bkg.png');
   background-size: cover;
   background-position: center;
   opacity: 0.22;
