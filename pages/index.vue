@@ -81,8 +81,8 @@ const { data: latest } = await useAsyncData('latest', () =>
   background-image: url('/assets/accueil-bkg.png');
   background-size: cover;
   background-position: center;
-  opacity: 0.22;
-  filter: grayscale(1) brightness(0.6);
+  opacity: 0.55;
+  filter: grayscale(1) brightness(0.7);
 }
 
 /* === Grain analogique === */
