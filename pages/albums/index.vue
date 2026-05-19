@@ -8,19 +8,17 @@
       </p>
       <div class="albums-grid">
         <NuxtLink
-          v-for="(article, index) in filteredArticles"
+          v-for="article in filteredArticles"
           :key="article._id"
           :to="`/albums/${article.slug.current}`"
-          :class="['album-item', { 'album-item--featured': index === 0 }]"
+          class="album-item"
+          :class="{ 'is-revealed': revealedId === article._id }"
+          @click="handleClick($event, article)"
         >
-          <div class="album-cover-wrapper">
-            <img :src="article.image" :alt="article.title" class="album-cover-img" />
-            <div class="grain"></div>
-          </div>
+          <img :src="article.image" :alt="article.title" class="album-cover-img" />
           <div class="album-info">
             <div class="album-info-title">{{ article.title }}</div>
             <div class="album-info-artist" v-if="article.stitle">{{ article.stitle }}</div>
-            <div class="album-info-date" v-if="article.date">{{ formatDate(article.date) }}</div>
           </div>
         </NuxtLink>
       </div>
@@ -29,6 +27,7 @@
 </template>
 
 <script setup>
+import { ref } from 'vue'
 import { useSanity } from '~/composables/useSanity'
 
 const client = useSanity()
@@ -39,7 +38,6 @@ const query = `
     title,
     stitle,
     slug,
-    date,
     "image": image.asset->url
   } | order(date desc)
 `
@@ -48,18 +46,21 @@ const { data: filteredArticles, pending, error } = await useAsyncData('articles'
   client.fetch(query)
 )
 
-function formatDate(dateString) {
-  if (!dateString) return ''
-  return new Intl.DateTimeFormat('fr-FR', {
-    month: 'short',
-    year: 'numeric',
-  }).format(new Date(dateString))
+const revealedId = ref(null)
+
+function handleClick(event, article) {
+  if (typeof window !== 'undefined' && window.matchMedia('(hover: none)').matches) {
+    if (revealedId.value !== article._id) {
+      event.preventDefault()
+      revealedId.value = article._id
+    }
+  }
 }
 </script>
 
 <style scoped>
 .albums-archive {
-  padding: 50px 20px 80px;
+  padding: 40px 20px 80px;
 }
 
 .archive-count {
@@ -68,103 +69,73 @@ function formatDate(dateString) {
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: #bbb;
-  margin-bottom: 30px;
+  margin-bottom: 24px;
 }
 
+/* === Grille === */
 .albums-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 50px 28px;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 8px;
 }
 
 .album-item {
-  display: flex;
-  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  display: block;
   cursor: pointer;
-}
-
-/* Premier article mis en avant */
-.album-item--featured {
-  grid-column: span 2;
-}
-
-.album-item--featured .album-info-title {
-  font-size: 1.2rem;
+  aspect-ratio: 1;
 }
 
 /* === Image === */
-.album-cover-wrapper {
-  position: relative;
-  overflow: hidden;
-}
-
 .album-cover-img {
   width: 100%;
-  height: auto;
-  display: block;
+  height: 100%;
   object-fit: cover;
-  filter: brightness(1.05) contrast(0.95);
-  transition: filter 0.5s ease, transform 0.4s ease;
+  object-position: center;
+  display: block;
+  transition: filter 0.5s ease, transform 0.5s ease;
 }
 
-/* === Grain === */
-.grain {
+/* === Overlay info === */
+.album-info {
   position: absolute;
-  inset: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 36px 10px 10px;
+  background: linear-gradient(to top, rgba(5, 3, 2, 0.72) 0%, transparent 100%);
   opacity: 0;
-  pointer-events: none;
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 700 700'><filter id='noiseFilter'><feTurbulence type='fractalNoise' baseFrequency='2.5' numOctaves='5' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23noiseFilter)' /></svg>");
-  background-size: cover;
-  mix-blend-mode: overlay;
-  transition: opacity 0.4s ease;
+  transition: opacity 0.5s ease;
 }
 
-/* === Hover === */
-.album-item:hover .album-cover-img {
-  filter: brightness(1.12) contrast(1.05) saturate(0.75);
+/* === Hover desktop === */
+.album-item:hover .album-cover-img,
+.album-item.is-revealed .album-cover-img {
+  filter: brightness(0.88) saturate(0.6);
   transform: scale(1.02);
 }
 
-.album-item:hover .grain {
-  opacity: 0.55;
+.album-item:hover .album-info,
+.album-item.is-revealed .album-info {
+  opacity: 1;
 }
 
-/* === Texte === */
-.album-info {
-  padding: 10px 0 0;
-  margin-top: 10px;
-  border-top: 1px solid rgba(0, 0, 0, 0.08);
-}
-
+/* === Typographie overlay === */
 .album-info-title {
   font-family: "DM Serif Text", serif;
   font-style: italic;
-  font-size: 1rem;
-  line-height: 1.25;
-  color: #222;
-  transition: color 0.2s ease;
-}
-
-.album-item:hover .album-info-title {
-  color: #e8695f;
+  font-size: 0.8rem;
+  line-height: 1.2;
+  color: rgba(244, 240, 232, 0.96);
 }
 
 .album-info-artist {
   font-family: "Fira Sans", sans-serif;
-  font-size: 0.82rem;
+  font-size: 0.65rem;
   font-weight: 300;
-  color: #777;
-  margin-top: 4px;
-}
-
-.album-info-date {
-  font-family: "Fira Sans", sans-serif;
-  font-size: 10px;
-  font-weight: 400;
-  color: #bbb;
-  margin-top: 5px;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+  color: rgba(210, 205, 195, 0.62);
+  margin-top: 3px;
 }
 
 .state-msg {
@@ -176,21 +147,16 @@ function formatDate(dateString) {
 }
 
 /* Responsive */
-@media (max-width: 700px) {
+@media (max-width: 1000px) {
   .albums-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  .album-item--featured {
-    grid-column: span 2;
+    grid-template-columns: repeat(4, 1fr);
   }
 }
 
-@media (max-width: 420px) {
+@media (max-width: 500px) {
   .albums-grid {
-    grid-template-columns: 1fr;
-  }
-  .album-item--featured {
-    grid-column: span 1;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 5px;
   }
 }
 </style>
