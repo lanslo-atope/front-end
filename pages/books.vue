@@ -89,7 +89,7 @@ function formatDate(dateString) {
   font-style: italic;
   font-weight: 300;
   font-size: 0.9rem;
-  line-height: 1.75;
+  line-height: 1.6;
   color: #777;
   margin-bottom: 60px;
 }
@@ -161,7 +161,7 @@ function formatDate(dateString) {
   font-size: 0.95rem;
   font-style: italic;
   color: var(--ink-muted);
-  line-height: 1.8;
+  line-height: 1.6;
   padding: 20px 0;
 }
 

@@ -52,7 +52,7 @@ const { data: latest } = await useAsyncData('latest', () =>
   max-width: 680px;
   margin: 0 auto;
   padding: 70px 20px 100px;
-  line-height: 1.85;
+  line-height: 1.65;
   font-family: "Fira Sans", serif;
   font-size: 1rem;
   color: var(--ink-mid);

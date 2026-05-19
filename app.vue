@@ -125,8 +125,17 @@ a, .article {
   font-family: "Fira Sans", sans-serif;
   font-size: 1rem;
   font-weight: 400;
-  line-height: 1.78;
-  margin-bottom: 20px;
+  line-height: 1.58;
   color: var(--ink-mid);
+}
+
+/* Typographie éditoriale — base commune pour tout texte en prose */
+.prose-editorial p {
+  margin: 0 0 1rem;
+  line-height: 1.58;
+}
+
+.prose-editorial p:last-child {
+  margin-bottom: 0;
 }
 </style>

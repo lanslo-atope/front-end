@@ -28,7 +28,7 @@
 
       <!-- Colonne droite -->
       <div class="album-right">
-        <div class="album-content">
+        <div class="album-content prose-editorial">
           <PortableText :value="album.content" />
           <div class="album-author">
             <span v-if="album.author?.avatar" class="author-avatar">
@@ -181,11 +181,6 @@ function formatLabelDate(dateString) {
 .album-content {
   font-size: 1rem;
   color: var(--ink-mid);
-  line-height: 1.78;
-}
-
-.album-content :deep(p) {
-  margin-bottom: 1.5em;
 }
 
 .album-content :deep(p:first-of-type) {
