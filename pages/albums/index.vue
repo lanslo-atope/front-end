@@ -3,6 +3,7 @@
     <p v-if="pending" class="state-msg">Chargement…</p>
     <p v-else-if="error" class="state-msg">Erreur : {{ error.message }}</p>
     <template v-else>
+      <p class="archive-preamble">Disques traversés lentement, parfois laissés ouverts pendant des semaines. Des notes prises dans leur sillage.</p>
       <p v-if="filteredArticles?.length" class="archive-count">
         {{ filteredArticles.length }} chroniques
       </p>
@@ -49,7 +50,7 @@ const { data: filteredArticles, pending, error } = await useAsyncData('articles'
 const revealedId = ref(null)
 
 function handleClick(event, article) {
-  if (typeof window !== 'undefined' && window.matchMedia('(hover: none)').matches) {
+  if (globalThis.window !== undefined && globalThis.window.matchMedia('(hover: none)').matches) {
     if (revealedId.value !== article._id) {
       event.preventDefault()
       revealedId.value = article._id
@@ -61,6 +62,17 @@ function handleClick(event, article) {
 <style scoped>
 .albums-archive {
   padding: 40px 20px 80px;
+}
+
+.archive-preamble {
+  max-width: 420px;
+  font-family: "Fira Sans", sans-serif;
+  font-style: italic;
+  font-weight: 300;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--ink-soft);
+  margin-bottom: 20px;
 }
 
 .archive-count {
