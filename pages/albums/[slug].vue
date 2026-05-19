@@ -1,6 +1,5 @@
 <template>
   <div v-if="album" class="album-page">
-    <!-- Grille principale -->
     <div class="album-layout">
       <!-- Colonne gauche -->
       <div class="album-left">
@@ -15,17 +14,16 @@
               <path d="M3 12V4a1 1 0 0 1 1-1h8l9 9-9 9-9-9z"/>
               <circle cx="7.5" cy="7.5" r="1.5" fill="white"/>
             </svg>
-            <p>{{ album.labelAndRelease.label+" — "+formatLabelDate(album.labelAndRelease.releaseYear) }}</p>
+            <p>{{ album.labelAndRelease.label + " — " + formatLabelDate(album.labelAndRelease.releaseYear) }}</p>
           </h2>
         </div>
-         <!-- Bouton retour -->
-    <div class="album-back">
-      <NuxtLink to="/albums" class="back-btn" aria-label="Retour aux albums">
-        <svg viewBox="0 0 50 9">
-          <path d="m0 4.5 5-3m-5 3 5 3m45-3h-77" />
-        </svg>
-      </NuxtLink>
-    </div>
+        <div class="album-back">
+          <NuxtLink to="/albums" class="back-btn" aria-label="Retour aux albums">
+            <svg viewBox="0 0 50 9">
+              <path d="m0 4.5 5-3m-5 3 5 3m45-3h-77" />
+            </svg>
+          </NuxtLink>
+        </div>
       </div>
 
       <!-- Colonne droite -->
@@ -41,12 +39,21 @@
             <span class="album-date">{{ formatAuthorDate(album.date) }}</span>
           </div>
         </div>
+
+        <!-- Chronique suivante -->
+        <div v-if="nextAlbum" class="album-next">
+          <span class="album-next-label">dans l'archive</span>
+          <NuxtLink :to="`/albums/${nextAlbum.slug.current}`" class="album-next-link">
+            {{ nextAlbum.title }}
+            <span v-if="nextAlbum.stitle" class="album-next-artist"> — {{ nextAlbum.stitle }}</span>
+          </NuxtLink>
+        </div>
       </div>
     </div>
   </div>
 
   <div v-else>
-    <p>Chargement...</p>
+    <p class="loading-msg">Chargement…</p>
   </div>
 </template>
 
@@ -55,11 +62,9 @@ import { useSanity } from '~/composables/useSanity'
 import { useRoute } from 'vue-router'
 import { PortableText } from '@portabletext/vue'
 
-// route dynamique : /albums/[slug]
 const route = useRoute()
 const client = useSanity()
 
-// fetch côté serveur ET client (SSR-friendly)
 const { data: album } = await useAsyncData(`album-${route.params.slug}`, () =>
   client.fetch(
     `*[_type == "article" && slug.current == $slug][0]{
@@ -68,10 +73,7 @@ const { data: album } = await useAsyncData(`album-${route.params.slug}`, () =>
       stitle,
       date,
       labelAndRelease,
-      author->{
-        name,
-        "avatar": avatar.asset->url
-      },
+      author->{ name, "avatar": avatar.asset->url },
       "image": image.asset->url,
       content,
       category
@@ -80,20 +82,28 @@ const { data: album } = await useAsyncData(`album-${route.params.slug}`, () =>
   )
 )
 
+const { data: nextAlbum } = await useAsyncData(`album-next-${route.params.slug}`, () => {
+  if (!album.value?.date) return null
+  return client.fetch(
+    `*[_type == "article" && category == "albums" && date < $date] | order(date desc)[0] {
+      title, stitle, slug
+    }`,
+    { date: album.value.date }
+  )
+})
+
 function formatAuthorDate(dateString) {
-  const date = new Date(dateString)
   return new Intl.DateTimeFormat('fr-FR', {
     day: '2-digit',
     month: '2-digit',
     year: 'numeric',
-  }).format(date)
+  }).format(new Date(dateString))
 }
 
 function formatLabelDate(dateString) {
-  const date = new Date(dateString)
   return new Intl.DateTimeFormat('fr-FR', {
     year: 'numeric',
-  }).format(date)
+  }).format(new Date(dateString))
 }
 </script>
 
@@ -110,8 +120,8 @@ function formatLabelDate(dateString) {
 /* Layout 2 colonnes */
 .album-layout {
   display: grid;
-  grid-template-columns: 350px 1fr;
-  gap: 35px;
+  grid-template-columns: 300px 1fr;
+  gap: 50px;
   align-items: start;
 }
 
@@ -121,11 +131,7 @@ function formatLabelDate(dateString) {
   border-radius: 2px;
   box-shadow: 0 3px 10px rgba(0,0,0,0.12);
   background: #f9f9f9;
-  margin-bottom: 10px;
-}
-
-.album-meta {
-  text-align: left;
+  margin-bottom: 18px;
 }
 
 .album-title {
@@ -133,61 +139,57 @@ function formatLabelDate(dateString) {
   font-weight: 400;
   font-style: italic;
   font-size: 2rem;
-  margin: 0 0 8px;
+  margin: 0 0 6px;
   color: #e8695f;
   line-height: 1.15;
   letter-spacing: -0.02em;
 }
 
 .album-artist-title {
-  font-size: 1.2rem;
-  font-weight: 400;
-  color: #e8695f;
+  font-size: 1rem;
+  font-weight: 300;
+  color: #888;
   margin: 0 0 10px;
 }
 
 .album-label-title {
-  font-size: 0.8rem;
-  font-weight: 200;
-  color: #444;
+  font-size: 0.78rem;
+  font-weight: 300;
+  color: #aaa;
   margin: 0 0 12px;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
 }
-.album-label-title p{
+
+.album-label-title p {
   margin-left: -5px;
 }
+
 .label-icon {
-  width: 20px;
-  height: 20px;
-  object-fit: contain;
+  width: 16px;
+  height: 16px;
   flex-shrink: 0;
-}
-
-.album-author {
-  font-size: 0.95rem;
-  color: #444;
-}
-
-.author-avatar img {
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  object-fit: cover;
-  margin-right: 8px;
-  vertical-align: middle;
+  opacity: 0.5;
 }
 
 /* Colonne droite */
 .album-right {
-  max-width: 750px; /* limite pour la lisibilité */
+  max-width: 580px;
 }
 
 .album-content {
   font-size: 1rem;
   color: #3a3a3a;
   line-height: 1.78;
+}
+
+.album-content :deep(p) {
+  margin-bottom: 1.5em;
+}
+
+.album-content :deep(p:first-of-type) {
+  font-size: 1.04rem;
 }
 
 .album-content > :first-child::first-letter {
@@ -199,37 +201,107 @@ function formatLabelDate(dateString) {
   font-weight: 100;
 }
 
-/* Responsive */
-@media (max-width: 900px) {
-  .album-layout {
-    grid-template-columns: 1fr;
-  }
-  .album-left {
-    max-width: 350px;
-    margin: 0 auto 30px;
-  }
-  .album-right {
-    max-width: 100%;
-  }
+/* Auteur */
+.album-author {
+  font-family: "Fira Sans", sans-serif;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  color: #aaa;
+  margin-top: 50px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(0,0,0,0.07);
+  font-weight: 300;
+  font-style: italic;
+}
+
+.author-avatar img {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* Chronique suivante */
+.album-next {
+  margin-top: 70px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(0,0,0,0.06);
+}
+
+.album-next-label {
+  display: block;
+  font-family: "Fira Sans", sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #ccc;
+  margin-bottom: 10px;
+}
+
+.album-next-link {
+  font-family: "DM Serif Text", serif;
+  font-style: italic;
+  font-size: 1.05rem;
+  color: #333;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.album-next-link:hover {
+  color: #e8695f;
+}
+
+.album-next-artist {
+  font-family: "Fira Sans", sans-serif;
+  font-style: normal;
+  font-size: 0.82rem;
+  font-weight: 300;
+  color: #aaa;
 }
 
 /* Bouton retour */
 .album-back {
-  margin-bottom: 20px;
+  margin-top: 30px;
   position: fixed;
   bottom: 30px;
 }
 
 .back-btn svg {
-  width: 40px;
+  width: 36px;
   height: auto;
   stroke: currentColor;
   fill: none;
   stroke-width: 1;
-  transition: transform 0.1s ease;
+  transition: transform 0.15s ease;
+  color: #aaa;
 }
 
 .back-btn:hover svg {
-  transform: translateX(-3px);
+  transform: translateX(-4px);
+  color: #333;
+}
+
+.loading-msg {
+  font-family: "Fira Sans", sans-serif;
+  font-size: 0.9rem;
+  font-style: italic;
+  color: #aaa;
+  padding: 40px 20px;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .album-layout {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+  .album-left {
+    max-width: 300px;
+  }
+  .album-right {
+    max-width: 100%;
+  }
 }
 </style>

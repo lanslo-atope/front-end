@@ -2,24 +2,29 @@
   <div class="albums-archive">
     <p v-if="pending" class="state-msg">Chargement…</p>
     <p v-else-if="error" class="state-msg">Erreur : {{ error.message }}</p>
-    <div v-else class="albums-grid">
-      <NuxtLink
-        v-for="article in filteredArticles"
-        :key="article._id"
-        :to="`/albums/${article.slug.current}`"
-        class="album-item"
-      >
-        <div class="album-cover-wrapper">
-          <img :src="article.image" :alt="article.title" class="album-cover-img" />
-          <div class="grain"></div>
-        </div>
-        <div class="album-info">
-          <div class="album-info-title">{{ article.title }}</div>
-          <div class="album-info-artist" v-if="article.stitle">{{ article.stitle }}</div>
-          <div class="album-info-date" v-if="article.date">{{ formatDate(article.date) }}</div>
-        </div>
-      </NuxtLink>
-    </div>
+    <template v-else>
+      <p v-if="filteredArticles?.length" class="archive-count">
+        {{ filteredArticles.length }} chroniques
+      </p>
+      <div class="albums-grid">
+        <NuxtLink
+          v-for="(article, index) in filteredArticles"
+          :key="article._id"
+          :to="`/albums/${article.slug.current}`"
+          :class="['album-item', { 'album-item--featured': index === 0 }]"
+        >
+          <div class="album-cover-wrapper">
+            <img :src="article.image" :alt="article.title" class="album-cover-img" />
+            <div class="grain"></div>
+          </div>
+          <div class="album-info">
+            <div class="album-info-title">{{ article.title }}</div>
+            <div class="album-info-artist" v-if="article.stitle">{{ article.stitle }}</div>
+            <div class="album-info-date" v-if="article.date">{{ formatDate(article.date) }}</div>
+          </div>
+        </NuxtLink>
+      </div>
+    </template>
   </div>
 </template>
 
@@ -54,12 +59,21 @@ function formatDate(dateString) {
 
 <style scoped>
 .albums-archive {
-  padding: 50px 20px 60px;
+  padding: 50px 20px 80px;
+}
+
+.archive-count {
+  font-family: "Fira Sans", sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #bbb;
+  margin-bottom: 30px;
 }
 
 .albums-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: 50px 28px;
 }
 
@@ -67,6 +81,15 @@ function formatDate(dateString) {
   display: flex;
   flex-direction: column;
   cursor: pointer;
+}
+
+/* Premier article mis en avant */
+.album-item--featured {
+  grid-column: span 2;
+}
+
+.album-item--featured .album-info-title {
+  font-size: 1.2rem;
 }
 
 /* === Image === */
@@ -106,7 +129,7 @@ function formatDate(dateString) {
   opacity: 0.55;
 }
 
-/* === Texte toujours visible === */
+/* === Texte === */
 .album-info {
   padding: 10px 0 0;
   margin-top: 10px;
@@ -150,5 +173,24 @@ function formatDate(dateString) {
   color: #999;
   font-style: italic;
   padding: 20px 0;
+}
+
+/* Responsive */
+@media (max-width: 700px) {
+  .albums-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .album-item--featured {
+    grid-column: span 2;
+  }
+}
+
+@media (max-width: 420px) {
+  .albums-grid {
+    grid-template-columns: 1fr;
+  }
+  .album-item--featured {
+    grid-column: span 1;
+  }
 }
 </style>

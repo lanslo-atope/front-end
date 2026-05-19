@@ -18,14 +18,40 @@
       Une collection de chroniques-fiction, pour lecteurs curieux, insomniaques, obsessionnels — ou simplement prêts à écouter un disque comme on lirait un film incompris et inoubliable.
       <br><br><strong>Si tu lis, tu entendras</strong>
     </p>
+
+    <div v-if="latest && latest.length" class="latest">
+      <NuxtLink
+        v-for="item in latest"
+        :key="item._id"
+        :to="`/albums/${item.slug.current}`"
+        class="latest-item"
+      >
+        <span class="latest-title">{{ item.title }}</span>
+        <span v-if="item.stitle" class="latest-artist">{{ item.stitle }}</span>
+      </NuxtLink>
+    </div>
   </div>
 </template>
+
+<script setup>
+import { useSanity } from '~/composables/useSanity'
+
+const client = useSanity()
+
+const { data: latest } = await useAsyncData('latest', () =>
+  client.fetch(`
+    *[_type == "article" && category == "albums"] | order(date desc)[0..2] {
+      _id, title, stitle, slug
+    }
+  `)
+)
+</script>
 
 <style>
 .a-propos {
   max-width: 680px;
   margin: 0 auto;
-  padding: 70px 20px 80px;
+  padding: 70px 20px 100px;
   line-height: 1.85;
   font-family: "Fira Sans", serif;
   font-size: 1rem;
@@ -95,5 +121,42 @@
   padding-top: 10px;
   font-weight: 100;
   color: #222;
+}
+
+/* Dernières chroniques */
+.latest {
+  margin-top: 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  border-top: 1px solid rgba(0, 0, 0, 0.07);
+  padding-top: 28px;
+}
+
+.latest-item {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  text-decoration: none;
+  font-style: normal;
+  transition: opacity 0.25s ease;
+}
+
+.latest-item:hover {
+  opacity: 0.5;
+}
+
+.latest-title {
+  font-family: "DM Serif Text", serif;
+  font-style: italic;
+  font-size: 0.95rem;
+  color: #333;
+}
+
+.latest-artist {
+  font-family: "Fira Sans", sans-serif;
+  font-size: 0.78rem;
+  font-weight: 300;
+  color: #aaa;
 }
 </style>
