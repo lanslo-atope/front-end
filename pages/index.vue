@@ -31,10 +31,20 @@
       </p>
 
       <!-- CTA -->
-      <NuxtLink to="/albums" class="home-cta">
-        Lire les dernières chroniques
-        <span class="home-cta-arrow">→</span>
-      </NuxtLink>
+      <div class="home-cta-block">
+        <NuxtLink to="/albums" class="home-cta">
+          Lire les dernières chroniques
+          <span class="home-cta-arrow">→</span>
+        </NuxtLink>
+        <ul v-if="latest?.length" class="home-latest">
+          <li v-for="item in latest" :key="item._id">
+            <NuxtLink :to="`/albums/${item.slug.current}`" class="home-latest-link">
+              <span class="home-latest-title">{{ item.title }}</span>
+              <span v-if="item.stitle" class="home-latest-artist">{{ item.stitle }}</span>
+            </NuxtLink>
+          </li>
+        </ul>
+      </div>
 
       <!-- Citation manifeste -->
       <div class="home-quote">
@@ -49,7 +59,16 @@
 </template>
 
 <script setup>
+import { useSanity } from '~/composables/useSanity'
+
 definePageMeta({ layout: 'home' })
+
+const client = useSanity()
+const { data: latest } = await useAsyncData('latest', () =>
+  client.fetch(`*[_type == "article" && category == "albums"] | order(date desc)[0..2] {
+    _id, title, stitle, slug
+  }`)
+)
 </script>
 
 <style scoped>
@@ -153,7 +172,15 @@ definePageMeta({ layout: 'home' })
   max-width: 360px;
 }
 
-/* === CTA === */
+/* === CTA block === */
+.home-cta-block {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-self: flex-start;
+  margin-bottom: auto;
+}
+
 .home-cta {
   font-family: "Fira Sans", sans-serif;
   font-size: 0.62rem;
@@ -169,7 +196,6 @@ definePageMeta({ layout: 'home' })
   padding-bottom: 4px;
   transition: border-color 0.25s ease, gap 0.25s ease;
   align-self: flex-start;
-  margin-bottom: auto;
 }
 
 .home-cta:hover {
@@ -183,6 +209,42 @@ definePageMeta({ layout: 'home' })
 
 .home-cta:hover .home-cta-arrow {
   transform: translateX(4px);
+}
+
+/* === Dernières chroniques === */
+.home-latest {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.home-latest-link {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+.home-latest-link:hover {
+  opacity: 0.65;
+}
+
+.home-latest-title {
+  font-family: "DM Serif Text", serif;
+  font-style: italic;
+  font-size: 0.78rem;
+  color: rgba(215, 208, 198, 0.72);
+  line-height: 1.3;
+}
+
+.home-latest-artist {
+  font-family: "Fira Sans", sans-serif;
+  font-size: 0.6rem;
+  font-weight: 300;
+  color: rgba(215, 208, 198, 0.38);
+  white-space: nowrap;
 }
 
 /* === Citation === */
