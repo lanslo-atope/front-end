@@ -132,8 +132,8 @@ definePageMeta({ layout: 'home' })
 
 /* === Titre === */
 .home-title {
-  font-family: "Fira Sans", sans-serif;
-  font-weight: 900;
+  font-family: "Anton", sans-serif;
+  font-weight: 400;
   font-size: clamp(3.2rem, 8.5vw, 7rem);
   line-height: 0.92;
   letter-spacing: -0.025em;
