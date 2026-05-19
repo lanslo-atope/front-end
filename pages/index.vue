@@ -6,11 +6,6 @@
     <div class="home-grain" aria-hidden="true"></div>
 
     <div class="home-body">
-      <!-- Logo -->
-      <div class="home-logo">
-        <img src="/assets/logo.png" alt="Te Voilà Bien Consumé" />
-      </div>
-
       <!-- Surtitre éditorial -->
       <div class="home-label-block">
         <span class="home-label">Chroniques narratives</span>
@@ -24,9 +19,7 @@
 
       <!-- Sous-texte -->
       <p class="home-desc">
-        Des récits, des impressions, des analyses<br>
-        et des fragments autour de musiques<br>
-        qui nous traversent.<br>
+        Des récits, des impressions, des analyses et des fragments autour de musiques qui nous traversent.<br>
         Une archive subjective et vivante.
       </p>
 
