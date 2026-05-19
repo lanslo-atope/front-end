@@ -1,11 +1,5 @@
 <template>
   <aside class="side-nav">
-    <div class="side-top">
-      <NuxtLink to="/">
-        <img src="/assets/logo.png" alt="TWBC" class="side-logo" />
-      </NuxtLink>
-    </div>
-
     <nav class="side-links">
       <NuxtLink to="/" class="side-link" exact-active-class="is-active">Accueil</NuxtLink>
       <NuxtLink to="/albums" class="side-link" active-class="is-active">Chroniques</NuxtLink>
@@ -35,20 +29,6 @@
   border-left: 1px solid rgba(30, 27, 24, 0.1);
 }
 
-.side-top {
-  padding-bottom: 28px;
-  border-bottom: 1px solid rgba(30, 27, 24, 0.1);
-  width: 100%;
-  display: flex;
-  justify-content: center;
-}
-
-.side-logo {
-  width: 42px;
-  height: auto;
-  display: block;
-}
-
 .side-links {
   flex: 1;
   display: flex;
@@ -76,19 +56,16 @@
 }
 
 .side-bottom {
-  padding-top: 28px;
-  border-top: 1px solid rgba(30, 27, 24, 0.1);
-  width: 100%;
   display: flex;
   justify-content: center;
 }
 
 .side-bottom-logo {
-  width: 38px;
+  width: 180px;
   height: auto;
   display: block;
   transform: rotate(-90deg);
-  opacity: 0.55;
+  opacity: 1;
 }
 
 /* Mobile : bande horizontale en haut */
@@ -105,19 +82,6 @@
     justify-content: space-between;
     border-left: none;
     border-bottom: 1px solid rgba(30, 27, 24, 0.12);
-  }
-
-  .side-top {
-    padding: 0;
-    border-bottom: none;
-    border-right: 1px solid rgba(30, 27, 24, 0.1);
-    padding-right: 16px;
-    height: 100%;
-    align-items: center;
-  }
-
-  .side-logo {
-    width: 30px;
   }
 
   .side-links {
@@ -137,8 +101,6 @@
   }
 
   .side-bottom {
-    padding: 0;
-    border-top: none;
     border-left: 1px solid rgba(30, 27, 24, 0.1);
     padding-left: 16px;
     height: 100%;
@@ -148,7 +110,6 @@
   .side-bottom-logo {
     transform: none;
     width: 28px;
-    opacity: 0.5;
   }
 }
 </style>
