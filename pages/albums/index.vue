@@ -3,6 +3,7 @@
     <p v-if="pending" class="state-msg">Chargement…</p>
     <p v-else-if="error" class="state-msg">Erreur : {{ error.message }}</p>
     <template v-else>
+      <p class="archive-preamble">Disques traversés lentement, parfois laissés ouverts pendant des semaines. Des notes prises dans leur sillage.</p>
       <p v-if="filteredArticles?.length" class="archive-count">
         {{ filteredArticles.length }} chroniques
       </p>
@@ -60,6 +61,17 @@ function formatDate(dateString) {
 <style scoped>
 .albums-archive {
   padding: 50px 20px 80px;
+}
+
+.archive-preamble {
+  max-width: 420px;
+  font-family: "Fira Sans", sans-serif;
+  font-style: italic;
+  font-weight: 300;
+  font-size: 0.9rem;
+  line-height: 1.75;
+  color: #777;
+  margin-bottom: 60px;
 }
 
 .archive-count {

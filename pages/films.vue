@@ -2,8 +2,8 @@
   <div class="archive-page">
     <header class="archive-header">
       <h1 class="archive-title">Cinéma</h1>
-      <p class="archive-subtitle">Fragments et impressions</p>
     </header>
+    <p class="archive-preamble">Des images qui persistent après la projection. Des scènes, des textures, des voix qui refusent de disparaître.</p>
 
     <p v-if="pending" class="state-msg">Chargement…</p>
     <p v-else-if="error" class="state-msg">Erreur : {{ error.message }}</p>
@@ -68,7 +68,7 @@ function formatDate(dateString) {
 }
 
 .archive-header {
-  margin-bottom: 50px;
+  margin-bottom: 36px;
   padding-bottom: 20px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
@@ -83,14 +83,15 @@ function formatDate(dateString) {
   line-height: 1;
 }
 
-.archive-subtitle {
+.archive-preamble {
+  max-width: 420px;
   font-family: "Fira Sans", sans-serif;
-  font-size: 0.82rem;
+  font-style: italic;
   font-weight: 300;
-  color: #aaa;
-  margin-top: 8px;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
+  font-size: 0.9rem;
+  line-height: 1.75;
+  color: #777;
+  margin-bottom: 60px;
 }
 
 .archive-list {
