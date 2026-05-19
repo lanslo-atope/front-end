@@ -58,6 +58,7 @@
 .side-bottom {
   display: flex;
   justify-content: center;
+  margin-bottom: 72px;
 }
 
 .side-bottom-logo {
