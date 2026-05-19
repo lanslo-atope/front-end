@@ -1,42 +1,33 @@
 <template>
   <div class="layout">
-    <nav class="navbar">
-      <NavBar />
-    </nav>
     <main>
       <slot />
-    <div class="background" />
-    <Footer />
+      <div class="background" />
+      <Footer />
     </main>
+    <SideNav />
   </div>
-  
 </template>
 
-
 <script setup>
-import NavBar from '~/components/NavBar.vue'
-import  Footer from '~/components/Footer.vue'
+import SideNav from '~/components/SideNav.vue'
+import Footer from '~/components/Footer.vue'
 </script>
 
 <style scoped>
-/* Conteneur principal */
 .layout {
-  display: flex; /* Mise en page flexible */
   position: relative;
-  height: 100vh; /* Prend toute la hauteur */
+  height: 100vh;
   overflow: hidden;
 }
 
-/* Contenu principal */
 main {
-  flex: 1;
-  flex-grow: 1; /* Prend tout l'espace restant */
-  padding: 20px;
-  overflow-y: auto; /* Permet de scroller si le contenu dépasse */
-  height: 100%; /* Assure une pleine hauteur */
+  height: 100%;
+  padding-right: 96px; /* réserve l'espace pour SideNav */
+  overflow-y: auto;
   z-index: 1;
-  
 }
+
 .background {
   position: fixed;
   left: 0;
@@ -47,7 +38,14 @@ main {
   background-size: cover;
   background-attachment: fixed;
   background-image: url('https://cdn.sanity.io/images/w6f4ec13/production/ada85cf666b6d2979ac09bf40d766ca94c0757e3-4032x3024.jpg');
-  background-repeat:no-repeat;
+  background-repeat: no-repeat;
   z-index: -1;
+}
+
+@media (max-width: 768px) {
+  main {
+    padding-right: 0;
+    padding-top: 50px; /* hauteur de la bande mobile SideNav */
+  }
 }
 </style>
