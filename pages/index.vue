@@ -91,7 +91,6 @@ const { data: latest } = await useAsyncData('latest', () =>
   padding: 48px 64px 56px;
   display: flex;
   flex-direction: column;
-  max-width: 820px;
 }
 
 /* === Titre === */
