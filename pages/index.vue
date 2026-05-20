@@ -6,12 +6,6 @@
     <div class="home-grain" aria-hidden="true"></div>
 
     <div class="home-body">
-      <!-- Surtitre éditorial -->
-      <div class="home-label-block">
-        <span class="home-label">Chroniques narratives</span>
-        <span class="home-label-line"></span>
-      </div>
-
       <!-- Titre principal -->
       <h1 class="home-title">
         Te Voilà<br>Bien Consumé
@@ -38,14 +32,14 @@
           </li>
         </ul>
       </div>
+    </div>
 
-      <!-- Citation manifeste -->
-      <div class="home-quote">
-        <span class="home-quote-star">✦</span>
-        <div class="home-quote-text">
-          <p>Il n'y a rien de plus brûlant<br>que ce qui reste après la flamme.</p>
-          <p class="home-quote-sig">— TWBC</p>
-        </div>
+    <!-- Citation manifeste — ferrée en bas à droite -->
+    <div class="home-quote">
+      <span class="home-quote-star">✦</span>
+      <div class="home-quote-text">
+        <p>Il n'y a rien de plus brûlant<br>que ce qui reste après la flamme.</p>
+        <p class="home-quote-sig">— TWBC</p>
       </div>
     </div>
   </div>
@@ -105,41 +99,6 @@ const { data: latest } = await useAsyncData('latest', () =>
   display: flex;
   flex-direction: column;
   max-width: 820px;
-}
-
-/* === Logo === */
-.home-logo img {
-  width: 44px;
-  height: auto;
-  display: block;
-  margin-bottom: 52px;
-  filter: brightness(10) saturate(0);
-  opacity: 0.9;
-}
-
-/* === Surtitre === */
-.home-label-block {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  margin-bottom: 16px;
-}
-
-.home-label {
-  font-family: "Fira Sans", sans-serif;
-  font-size: 0.58rem;
-  font-weight: 400;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: rgba(232, 105, 95, 0.72);
-}
-
-.home-label-line {
-  display: block;
-  width: 26px;
-  height: 1px;
-  background: #e8695f;
-  opacity: 0.55;
 }
 
 /* === Titre === */
@@ -241,13 +200,16 @@ const { data: latest } = await useAsyncData('latest', () =>
   white-space: nowrap;
 }
 
-/* === Citation === */
+/* === Citation — ferrée bas droite === */
 .home-quote {
-  margin-top: 72px;
+  position: absolute;
+  bottom: 56px;
+  right: 64px;
   display: flex;
   gap: 14px;
   align-items: flex-start;
-  max-width: 360px;
+  max-width: 320px;
+  text-align: right;
 }
 
 .home-quote-star {
@@ -278,7 +240,7 @@ const { data: latest } = await useAsyncData('latest', () =>
 @media (max-width: 768px) {
   .home {
     padding-right: 0;
-    padding-top: 50px; /* hauteur de la bande mobile SideNav */
+    padding-top: 50px;
   }
 
   .home-body {
@@ -286,12 +248,12 @@ const { data: latest } = await useAsyncData('latest', () =>
     min-height: calc(100vh - 50px);
   }
 
-  .home-logo {
-    display: none; /* logo déjà dans SideNav mobile */
-  }
-
   .home-title {
     font-size: clamp(2.8rem, 13vw, 5rem);
+  }
+
+  .home-quote {
+    display: none;
   }
 }
 
