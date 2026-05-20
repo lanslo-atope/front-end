@@ -33,7 +33,7 @@
         </ul>
       </div>
       <!-- Citation manifeste — ferrée bas droite -->
-      <p class="home-quote">✦ Il n'y a rien de plus brûlant que ce qui reste après la flamme. <span class="home-quote-sig">— TWBC</span></p>
+      <p class="home-quote">Il n'y a rien de plus brûlant que ce qui reste après la flamme.</p>
     </div>
   </div>
 </template>
