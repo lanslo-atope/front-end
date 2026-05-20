@@ -139,7 +139,7 @@ function handleClick(event, article) {
   font-style: italic;
   font-size: 0.8rem;
   line-height: 1.2;
-  color: rgba(244, 240, 232, 0.96);
+  color: #e8695f;
 }
 
 .album-info-artist {
