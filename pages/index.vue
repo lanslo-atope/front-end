@@ -32,15 +32,8 @@
           </li>
         </ul>
       </div>
-    </div>
-
-    <!-- Citation manifeste — ferrée en bas à droite -->
-    <div class="home-quote">
-      <span class="home-quote-star">✦</span>
-      <div class="home-quote-text">
-        <p>Il n'y a rien de plus brûlant<br>que ce qui reste après la flamme.</p>
-        <p class="home-quote-sig">— TWBC</p>
-      </div>
+      <!-- Citation manifeste — ferrée bas droite -->
+      <p class="home-quote">✦ Il n'y a rien de plus brûlant que ce qui reste après la flamme. <span class="home-quote-sig">— TWBC</span></p>
     </div>
   </div>
 </template>
@@ -202,38 +195,17 @@ const { data: latest } = await useAsyncData('latest', () =>
 
 /* === Citation — ferrée bas droite === */
 .home-quote {
-  position: absolute;
-  bottom: 56px;
-  right: 64px;
-  display: flex;
-  gap: 14px;
-  align-items: flex-start;
-  max-width: 320px;
-  text-align: right;
-}
-
-.home-quote-star {
-  font-size: 0.65rem;
-  color: #e8695f;
-  opacity: 0.6;
-  flex-shrink: 0;
-  margin-top: 3px;
-}
-
-.home-quote-text p {
-  font-family: "Fira Sans", sans-serif;
-  font-size: 0.58rem;
-  font-weight: 300;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: rgba(215, 208, 198, 0.38);
-  line-height: 1.65;
+  align-self: flex-end;
+  font-family: "DM Serif Text", serif;
+  font-style: italic;
+  font-size: 0.75rem;
+  color: rgba(215, 208, 198, 0.35);
   margin: 0;
+  white-space: nowrap;
 }
 
-.home-quote-text .home-quote-sig {
-  margin-top: 8px;
-  color: rgba(215, 208, 198, 0.22);
+.home-quote-sig {
+  color: rgba(215, 208, 198, 0.2);
 }
 
 /* === Responsive === */
